@@ -1,0 +1,22 @@
+.header{
+    background-color: #222;
+    height :   36px;
+    padding : 8px 32px 8px 16px;
+}
+
+.logo {
+    background-color: #ff7f7f;
+    height : 35px;
+    animation-name: logoAni;
+    animation: rotation 8s infinite linear;
+    justify-content: left;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotateY(0deg);
+      }
+      to {
+        transform: rotateY(360deg);
+      }
+  }
