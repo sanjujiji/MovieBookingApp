@@ -7,9 +7,11 @@
 }
 
 .imageList{
-
+    width : auto;
+    height : 250px;
     overflow-x: visible;
     overflow-y : hidden;
+    
 }
 
 
@@ -17,13 +19,15 @@
     float:left;
     display:block;
     width:76%;
+   
 }
 
 
 .right{
     float:left;
     display:block;
-    width:24%;
+    width: 24%;
+    
 }
 
 .flex-container{
@@ -36,3 +40,12 @@
     cursor : pointer;
 }
 
+fieldset{
+    border: none !important;
+    outline: none !important;
+}
+
+#applyButton{
+    width : 25em;
+    font-weight: bolder;
+}
