@@ -49,7 +49,6 @@ let theme = createTheme({
   maxWidth : 240
 });
 
-// let [movieScreened,setMovieScreened] = ([""]);
 
 let theme1 = createTheme({
   palette: {
@@ -87,17 +86,6 @@ theme1 = createTheme(theme1,{
         </React.Fragment>
       );
 function BottomPortion(){
-// class BottomPortion extends Component{
-//     constructor(){
-//       super();
-//       this.state = {
-//         movieScreened : moviesData,
-//         genreName :[],
-//         artistName :[],
-//         releaseStart:null,
-//         releaseEnd:null
-//       }
-//     }
   const[movieScreened,setMovieScreen]=useState(moviesData);
   const[genreName,setGenreName]=useState([]);
   const[artistName,setArtistName]=useState([]);
@@ -111,98 +99,70 @@ function BottomPortion(){
     let artistList = artistName;
     let releaseStartDt = releaseStart;
     let releaseEndDt = releaseEnd;
-    
-    console.log("after button clicked");
-    console.log(genreName);
-    console.log(artistName);
+
     //if movie name is given then reduce the array list of movies
     var movieNameScreened;
         if ((movieName != "") && (genreList.length > 0) && (artistList.length > 0) && (releaseStartDt != "") && (releaseEndDt != "")) {
-          console.log("1");
           movieNameScreened = moviesData.filter(function(movie){
           return ((movie.title.toLowerCase() === movieName.toLowerCase()) && (genreList.some(r => movie.genres.indexOf(r) >= 0))
-          && (movie.artists.filter(x => x.id.includes(artistList))) && ((new Date(movie.release_date).getTime() >= new Date(releaseStartDt).getTime()) && (new Date(movie.release_date).getTime() <= new Date(releaseEndDt).getTime())))
+          && (movie.artists.some(y => y.id.includes(artistList))) && ((new Date(movie.release_date).getTime() >= new Date(releaseStartDt).getTime()) && (new Date(movie.release_date).getTime() <= new Date(releaseEndDt).getTime())))
           })
         }
         else if ((movieName != "") && (genreList.length > 0) && (artistList.length > 0)) {
-          console.log("2");
           movieNameScreened = moviesData.filter(function(movie){
-          return ((movie.title.toLowerCase() === movieName.toLowerCase()) && (genreList.some(r => movie.genres.indexOf(r) >= 0)) && (movie.artists.filter(x => x.id.includes(artistList))))
+          return ((movie.title.toLowerCase() === movieName.toLowerCase()) && (genreList.some(r => movie.genres.indexOf(r) >= 0)) && (movie.artists.some(y => y.id.includes(artistList))))
           })
         }
         else if ((movieName != "") && (genreList.length > 0) ){
-          console.log("3");
           movieNameScreened = moviesData.filter(function(movie){
           return ((movie.title.toLowerCase() === movieName.toLowerCase()) && (genreList.some(r => movie.genres.indexOf(r) >= 0)))
           })
         }
         else if ((movieName != "") && (artistList.length > 0)) {
-          console.log("4");
           movieNameScreened = moviesData.filter(function(movie){
-          return ((movie.title.toLowerCase() === movieName.toLowerCase()) && (movie.artists.filter(x => x.id.includes(artistList))))
+          return ((movie.title.toLowerCase() === movieName.toLowerCase()) && (movie.artists.some(y => y.id.includes(artistList))) )
           })
         }
         else if ((movieName != "") && (releaseStartDt != "") && (releaseEndDt != "")) {
-          console.log("5");
           movieNameScreened = moviesData.filter(function(movie){
           return ((movie.title.toLowerCase() === movieName.toLowerCase()) && ((new Date(movie.release_date).getTime() >= new Date(releaseStartDt).getTime()) && (new Date(movie.release_date).getTime() <= new Date(releaseEndDt).getTime())))
           })
         }
-      else if ((genreList.length > 0) && (artistList.length > 0) && (releaseStartDt != "") && (releaseEndDt != "")) {
-        console.log("6");
+        else if ((genreList.length > 0) && (artistList.length > 0) && (releaseStartDt != "") && (releaseEndDt != "")) {
         movieNameScreened = moviesData.filter(function(movie){
         return ((genreList.some(r => movie.genres.indexOf(r) >= 0))
-        && (movie.artists.filter(x => x.id.includes(artistList))) && ((new Date(movie.release_date).getTime() >= new Date(releaseStartDt).getTime()) && (new Date(movie.release_date).getTime() <= new Date(releaseEndDt).getTime())))
+        && (moviesData.filter(x => x.artists.some(y => y.id.includes(artistList)))) && ((new Date(movie.release_date).getTime() >= new Date(releaseStartDt).getTime()) && (new Date(movie.release_date).getTime() <= new Date(releaseEndDt).getTime())))
         })
       }
       else if ((genreList.length > 0) && (releaseStartDt != "") && (releaseEndDt != "")) {
-        console.log("7");
         movieNameScreened = moviesData.filter(function(movie){
         return ((genreList.some(r => movie.genres.indexOf(r) >= 0)) && ((new Date(movie.release_date).getTime() >= new Date(releaseStartDt).getTime()) && (new Date(movie.release_date).getTime() <= new Date(releaseEndDt).getTime())))
         })
       }
       else if ((artistList.length > 0) && (releaseStartDt != "") && (releaseEndDt != "")) {
-        console.log("8");
         movieNameScreened = moviesData.filter(function(movie){
-        return ((movie.artists.filter(x => x.id.includes(artistList))) && ((new Date(movie.release_date).getTime() >= new Date(releaseStartDt).getTime()) && (new Date(movie.release_date).getTime() <= new Date(releaseEndDt).getTime())))
+        return ((movie.artists.some(y => y.id.includes(artistList))) && ((new Date(movie.release_date).getTime() >= new Date(releaseStartDt).getTime()) && (new Date(movie.release_date).getTime() <= new Date(releaseEndDt).getTime())))
         })
       }
       else if ((genreList.length > 0) && (artistList.length > 0)) {
-        console.log("9");
         movieNameScreened = moviesData.filter(function(movie){
-        return ((genreList.some(r => movie.genres.indexOf(r) >= 0)) && (movie.artists.filter(x => x.id.includes(artistList))))
+        return ((genreList.some(r => movie.genres.indexOf(r) >= 0)) && (movie.artists.some(y => y.id.includes(artistList))) )
         })
       }
       else if ((movieName != "")){
-        console.log("10");
         movieNameScreened = moviesData.filter(function(movie){
           return ((movie.title.toLowerCase() === movieName.toLowerCase()))
       })
     }
     else if ((genreList.length > 0)) {
-      console.log("11");
       movieNameScreened = moviesData.filter(function(movie){
       return ((genreList.some(r => movie.genres.indexOf(r) >= 0)))
       })
     }
     else if ((artistList.length > 0)) {
-      console.log("12");
       movieNameScreened = moviesData.filter(x => x.artists.some(y => y.id.includes(artistList)));
-      // movieNameScreened = moviesData.filter(function(movie){
-      // artistList.forEach((r) => ar.push(moviesData.filter((x) => x.artists.some((y) => y.id.includes(r)))))
-      // })
-      
-        // console.log(ar[1])
-      // return (artistList.forEach((r) => moviesData.filter((x) => x.artists.some((y) => y.id.includes(r)))))
-      // let temp = moviesData.filter(function(movie){artistList.forEach((r) => movie.artists.filter((x) => x.id.includes(r) === true))})
-      // ? ar.push(moviesData.filter((x) => x.artists.id.includes(r))) : null);
-      // movieNameScreened = moviesData.filter(function(movie){
-      // return(artistList.some(r => movie.artists.filter(x => x.id.includes(r) === true)));
-      // }
-      // )
     }
     else if ((releaseStartDt != "") && (releaseEndDt != "")) {
-      console.log("13");
       movieNameScreened = moviesData.filter(function(movie){
       return (((new Date(movie.release_date).getTime() >= new Date(releaseStartDt).getTime()) && (new Date(movie.release_date).getTime() <= new Date(releaseEndDt).getTime())))
       })
@@ -211,19 +171,13 @@ function BottomPortion(){
       setMovieScreen(movieNameScreened);
   }
 
-
-  
-
   const handleGenreChange = (event) => {
     const {
       target: { value },
     } = event;
     setGenreName(
-      // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
       );
-      console.log("in genre");
-      console.log(genreName);
     };
 
      const handleArtistChange = (event) => {
@@ -231,11 +185,8 @@ function BottomPortion(){
           target: { value },
         } = event;
         setArtistName(
-          // On autofill we get a stringified value.
           typeof value === 'string' ? value.split(',') : value,
           );
-          console.log("in func");
-          console.log(artistName);
       };
 
 
@@ -276,7 +227,7 @@ function BottomPortion(){
                   </Select>
           </FormControl>
 
-          <FormControl sx={{ ml: 1, mr:2, mt:2, width: 250 }}>
+          <FormControl sx={{ ml: 1, mr:2, mt:2, mb: 1, width: 250 }}>
               <InputLabel id="artist-multiple-checkbox-label">Artists</InputLabel>
               <Select
                       labelId="artist-multiple-checkbox-label"
@@ -290,14 +241,14 @@ function BottomPortion(){
                     >
                    {artists.map((artist) => (
                         <MenuItem key={artist.id} value={artist.id}>
-                            <Checkbox checked={artistName.indexOf(artist.first_name+" "+artist.last_name) > -1} />
+                            <Checkbox checked={artistName.indexOf(artist.id) > -1} />
                             <ListItemText  primary={artist.first_name+" "+artist.last_name} />
                         </MenuItem>
                      ))}
               </Select>
           </FormControl>
 
-          <FormControl sx={{ ml: 3, mr:2, mt:1,mb:2, width: 250 ,color: 'black'}}>
+          <FormControl sx={{ ml: 3, mr:2, mb:2, width: 250 ,color: 'black'}}>
               <br></br>
               <br></br>
               <LocalizationProvider dateAdapter={AdapterDateFns}>

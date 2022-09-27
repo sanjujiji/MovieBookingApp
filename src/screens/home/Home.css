@@ -7,8 +7,7 @@
 }
 
 .imageList{
-    width : auto;
-    height : 250px;
+    /* height : 250px; */
     overflow-x: visible;
     overflow-y : hidden;
     

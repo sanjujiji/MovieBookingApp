@@ -2,12 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Home from '../src/screens/home/Home';
+import HomeDetails from '../src/screens/details/HeaderDetails';
 import reportWebVitals from './reportWebVitals';
+import Details from'../src/screens/details/Details';
+import App from './common/App';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Home/>
+    <App />
   </React.StrictMode>
 );
 

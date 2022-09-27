@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Home.css';
-import DisplayImageList from './DisplayImageList';
+import { DisplayImageList } from './DisplayImageList';
 
 
 export default function LeftPortion(props) {
