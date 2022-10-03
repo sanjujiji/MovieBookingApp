@@ -24,6 +24,7 @@ import Card from '@mui/material/Card';
 
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { isThisSecond } from 'date-fns';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -45,6 +46,17 @@ let theme = createTheme({
     },
   },
   spacing : 8,
+  minWidth : 240,
+  maxWidth : 240
+});
+
+theme = createTheme(theme,{
+  typography: {
+    body1 : {
+      color: theme.palette.primary.light,
+      margin : theme.spacing(2),
+    }
+  },
   minWidth : 240,
   maxWidth : 240
 });
@@ -85,21 +97,28 @@ theme1 = createTheme(theme1,{
           
         </React.Fragment>
       );
-function BottomPortion(){
-  const[movieScreened,setMovieScreen]=useState(moviesData);
-  const[genreName,setGenreName]=useState([]);
-  const[artistName,setArtistName]=useState([]);
-  const[releaseStart,setReleaseStart]=useState("");
-  const[releaseEnd,setReleaseEnd]=useState("");
 
-  const showMovie = (e) => {
+class BottomPortion extends Component{
+  constructor(){
+    super();
+    this.state = {
+      movieScreened : moviesData,
+      genreName : [],
+      artistName : [],
+      releaseStart : "",
+      releaseEnd : ""
+    };
     
-    let movieName = document.getElementById("movie-name").value;
-    let genreList = genreName;
-    let artistList = artistName;
-    let releaseStartDt = releaseStart;
-    let releaseEndDt = releaseEnd;
+  }
 
+  showMovie(e) {
+   
+    let movieName = document.getElementById("movie-name").value;
+    let genreList = this.state.genreName;
+    let artistList = this.state.artistName;
+    let releaseStartDt = this.state.releaseStart;
+    let releaseEndDt = this.state.releaseEnd;
+    
     //if movie name is given then reduce the array list of movies
     var movieNameScreened;
         if ((movieName != "") && (genreList.length > 0) && (artistList.length > 0) && (releaseStartDt != "") && (releaseEndDt != "")) {
@@ -168,128 +187,155 @@ function BottomPortion(){
       })
     }
       
-      setMovieScreen(movieNameScreened);
+      this.setState({movieScreened : movieNameScreened});
   }
 
-  const handleGenreChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setGenreName(
-      typeof value === 'string' ? value.split(',') : value,
-      );
+    handleGenreChange = (event) => {
+      const {
+        target: { value },
+      } = event;
+    // setGenreName(
+    //   typeof value === 'string' ? value.split(',') : value,
+    //   );
+      this.setState({genreName : (typeof value === 'string' ? value.split(',') : value)})
     };
 
-     const handleArtistChange = (event) => {
+    handleArtistChange = (event) => {
         const {
           target: { value },
         } = event;
-        setArtistName(
-          typeof value === 'string' ? value.split(',') : value,
-          );
+        // setArtistName(
+        //   typeof value === 'string' ? value.split(',') : value,
+        //   );
+        this.setState({artistName : (typeof value === 'string' ? value.split(',') : value)})
       };
 
 
-
-  return (
+      render(){
+      return (
     <div>
       <div>
-        <LeftPortion  moviesData={movieScreened}></LeftPortion>
+        <LeftPortion  moviesData={this.state.movieScreened}></LeftPortion>
       </div>
       <div  className="right">
         <br></br>
         <br></br>
         <Card variant="outlined" sx={{ width: 300, marginLeft : "64px" }}>{card}  
-          <ThemeProvider theme={theme}>
-          
-          <FormControl sx={{ml:3, m:2, width : 250 }}>
+        <ThemeProvider theme={theme}>
+            <Typography variant="body1" gutterBottom>
+              <FormControl sx={{ width : 250 }} >
             <TextField id="movie-name" label="Movie Name" />
-          </FormControl>
+            </FormControl>
+            </Typography> 
+            </ThemeProvider>
           
-          <FormControl sx={{ml: 1, mr:2, mt:2, width : 250 }}>
+            <FormControl sx={{ width : 250 }} >
+            <ThemeProvider theme={theme}>
+            <Typography variant="body1" gutterBottom>
+              
               <InputLabel id="multiple-checkbox-label-genre">Genres</InputLabel>
+              </Typography> 
+              </ThemeProvider>
                    <Select 
                       labelId="genre-multiple-checkbox-label"
                       id="genre-multiple-checkbox"
                       multiple
-                      value={genreName}
-                      onChange={handleGenreChange}
+                      value={this.state.genreName}
+                      onChange={this.handleGenreChange.bind(this)}
                       input={<OutlinedInput label="Genres" />}
                       renderValue={(selected) => selected.join(', ')}
                       MenuProps={MenuProps}
                     >
                     {genres.map((genre) => (
                         <MenuItem key={genre.id} value={genre.name} >
-                            <Checkbox checked={genreName.indexOf(genre.name) > -1} />
+                            <Checkbox checked={this.state.genreName.indexOf(genre.name) > -1} />
                             <ListItemText primary={genre.name} />
                         </MenuItem>
                      ))}
                   </Select>
           </FormControl>
 
-          <FormControl sx={{ ml: 1, mr:2, mt:2, mb: 1, width: 250 }}>
+          <FormControl sx={{width: 250 }}>
+          <ThemeProvider theme={theme}>
+          <Typography variant="body1" gutterBottom>
               <InputLabel id="artist-multiple-checkbox-label">Artists</InputLabel>
+              </Typography>
+              </ThemeProvider>
               <Select
                       labelId="artist-multiple-checkbox-label"
                       id="artist-multiple-checkbox"
                       multiple
-                      value={artistName}
-                      onChange={handleArtistChange}
+                      value={this.state.artistName}
+                      onChange={this.handleArtistChange.bind(this)}
                       input={<OutlinedInput label="Artists" />}
                       renderValue={(selected) => (selected.join(', '))}
                         
                     >
                    {artists.map((artist) => (
                         <MenuItem key={artist.id} value={artist.id}>
-                            <Checkbox checked={artistName.indexOf(artist.id) > -1} />
+                            <Checkbox checked={this.state.artistName.indexOf(artist.id) > -1} />
                             <ListItemText  primary={artist.first_name+" "+artist.last_name} />
                         </MenuItem>
                      ))}
               </Select>
           </FormControl>
 
-          <FormControl sx={{ ml: 3, mr:2, mb:2, width: 250 ,color: 'black'}}>
+          <ThemeProvider theme={theme}>
+          <Typography variant="body1" gutterBottom>
+          <FormControl sx={{ width: 250 ,color: 'black'}}>
               <br></br>
               <br></br>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                   id = "releaseStartId"
                   inputFormat="dd-MM-yyyy"
-                  value={releaseStart|| null}
+                  value={this.state.releaseStart|| null}
                   label = "Release Start Date"
                   onChange={(newValue) => {
-                        setReleaseStart(newValue);
+                        // setReleaseStart(newValue);
+                        this.setState({releaseStart : newValue })
                   }}
                   renderInput={(params) => <TextField {...params}  id="outlined-required" InputLabelProps={{shrink: true, }} 
                   inputProps={{...params.inputProps,placeholder: "dd-MM-yyyy"}} />} />
               </LocalizationProvider>
           </FormControl>
-          
-          <FormControl sx={{ ml: 3, mr:2, mt:2,mb:2, width: 250 }}>
+          </Typography>
+          </ThemeProvider>
+
+          <ThemeProvider theme={theme}>
+          <Typography variant="body1" gutterBottom>
+          <FormControl sx={{width: 250 }}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                     id="releaseEndId"
                     inputFormat="dd-MM-yyyy"
-                    value={releaseEnd || null}
+                    value={this.state.releaseEnd || null}
                     onChange={(newValue) => {
-                                setReleaseEnd(newValue);
+                                // setReleaseEnd(newValue);
+                                this.setState({releaseEnd : newValue })
                     }}
                     label="Release End Date"
                     renderInput={(params) => <TextField {...params}  id="outlined-required"  InputLabelProps={{shrink: true,}} 
                     inputProps={{...params.inputProps,placeholder: "dd-MM-yyyy"}} />} />  
                 </LocalizationProvider>
-          </FormControl>
+           </FormControl>
+          </Typography>
+          </ThemeProvider>
         
-        <FormControl sx={{ ml:3, mt:2, mb:2, mr:2, width: 250 }}> 
+          <ThemeProvider theme={theme}>
+          <Typography variant="body1" gutterBottom>
+        <FormControl sx={{ width: 250 }}> 
             <CardActions>
-                <Button size="large" variant="contained" id="applyButton" onClick = {showMovie}>APPLY</Button>
+                <Button size="large" variant="contained" id="applyButton" onClick = {this.showMovie.bind(this)}>APPLY</Button>
             </CardActions>
-        </FormControl>
-      </ThemeProvider>
+            </FormControl>
+        </Typography>
+        </ThemeProvider>
       </Card>
     </div>
     </div>
   );
           }
+        }
 
 export {BottomPortion};

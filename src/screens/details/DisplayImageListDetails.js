@@ -5,17 +5,14 @@ import ImageListItem from '@mui/material/ImageListItem';
 import format from "date-fns/format";
 import Details from './Details';
 
-
-
-
-function  DisplayImageListDetails(props){
-    //function to handle the onClick() on the image
+class  DisplayImageListDetails extends Component{
+  render(){
        
     return(
         <div>
         <ImageList sx={{ width: "auto", height: "auto" }} variant="quilted" cols={1} rows = {1} >
         {
-            props.moviesData.map((item) => {
+            this.props.moviesData.map((item) => {
                 return(
                 <ImageListItem key = {item.id} sx={{height: 350 , margin : 4}}  >
                     <img
@@ -32,8 +29,9 @@ function  DisplayImageListDetails(props){
         }  
         </ImageList>  
         </div>
-      
+  
     )
+} 
     }
 
 export default  DisplayImageListDetails ;

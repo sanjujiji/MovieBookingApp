@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Component} from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
@@ -25,8 +25,15 @@ const theme = createTheme({
   });
 
 
-function RightDetails(props){
-    const [value, setValue] = React.useState(0);
+class RightDetails extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            value : 0
+        }
+    }
+    render(){
+   
     return(
         <div>
         <br></br>
@@ -41,9 +48,9 @@ function RightDetails(props){
             <Typography component="legend"></Typography>
                 <Rating
                     name="simple-controlled"
-                    value={value}
+                    value={this.state.value}
                     onChange={(event, newValue) => {
-                    setValue(newValue);
+                    this.setState(newValue);
                 }}
                 />
             </div>
@@ -55,7 +62,7 @@ function RightDetails(props){
             <div>
                 <Grid container spacing={2} direction="row">
                 {
-                    props.moviesData.map((item) => {
+                    this.props.moviesData.map((item) => {
                         return(
                             
                             item.artists.map((artist) =>{
@@ -82,6 +89,7 @@ function RightDetails(props){
         </ThemeProvider>  
         </div>
     )
+            }
 }
 
 export default RightDetails;

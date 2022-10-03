@@ -3,10 +3,15 @@ import './Home.css';
 import { DisplayImageList } from './DisplayImageList';
 
 
-export default function LeftPortion(props) {
+export default class LeftPortion extends Component {
+    constructor(props){
+      super(props);
+    }
+    render(){
         return(
           <div className='left'>
-              <DisplayImageList moviesData = {props.moviesData} />
+              <DisplayImageList moviesData = {this.props.moviesData} />
           </div>
-          )
-        }    
+      )  
+  }
+}    

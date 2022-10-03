@@ -10,7 +10,7 @@
     /* height : 250px; */
     overflow-x: visible;
     overflow-y : hidden;
-    
+    object-fit: cover;
 }
 
 

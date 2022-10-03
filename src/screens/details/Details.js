@@ -1,4 +1,4 @@
-import React , {useState,useEffect }from 'react';
+import React , {useState,useEffect,Component }from 'react';
 import './Details.css';
 import HeaderDetails from './HeaderDetails';
 import moviesData from '../../common/moviesData.js';
@@ -8,13 +8,18 @@ import RightDetails from '../details/RightDetails';
 import {useParams} from 'react-router-dom';
 
 
+
+
 function Details(){
     const params = useParams();
+    // const location = useLocation();
+    // const bookFlag  = location.state.book;  
     
     let movieDetail;
     movieDetail = moviesData.filter(function(movie){
-        return(movie.id === params.id)
-})
+        return(movie.id === params.id);  
+    })
+    
     return(
         <div>
         <HeaderDetails />
@@ -32,4 +37,5 @@ function Details(){
         </div>      
     )
 }
+
 export default Details;

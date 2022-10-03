@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {Component} from 'react';
 import DisplayImageListDetails from '../details/DisplayImageListDetails';
 
-function LeftDetails(props){
+class LeftDetails extends Component{
+    render(){
     return(
-        <DisplayImageListDetails moviesData={props.moviesData}></DisplayImageListDetails>
+        <DisplayImageListDetails moviesData={this.props.moviesData}></DisplayImageListDetails>
     )
+}
 }
 
 export default LeftDetails;

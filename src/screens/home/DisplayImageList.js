@@ -8,17 +8,19 @@ import { Link } from 'react-router-dom';
 
 
 
-function  DisplayImageList(props){
+class DisplayImageList extends Component{
+    
+    render() {
     //function to handle the onClick() on the image
     return(
         <div>
         <ImageList sx={{ width: "auto", height: "auto" }} variant="quilted" cols={4} rows = {1} >
         {
-            props.moviesData.map((item) => {
+            this.props.moviesData.map((item) => {
                 return(
-                <div>
+                <div key = {item.id}>
                 <Link to={`/Details/${item.id}`}>    
-                <ImageListItem key = {item.id} sx={{height: 350 , margin : 4}}  >
+                <ImageListItem  sx={{height: 350 , margin : 4}}  >
                     <img
                         src={`${item.poster_url}?w=164&h=164&fit=crop&auto=format`}
                         srcSet={`${item.poster_url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
@@ -37,5 +39,6 @@ function  DisplayImageList(props){
        </div>
    )
     }
+}
 
 export  {DisplayImageList};

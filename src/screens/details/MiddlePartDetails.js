@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Component} from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import format from "date-fns/format";
@@ -30,14 +30,14 @@ const theme = createTheme({
     },
   };
 
-function MiddlePartDetails(props){
-    
+class MiddlePartDetails extends Component{
+    render(){
     return(
            <div>
            
         <ThemeProvider theme={theme}>
         {
-            props.moviesData.map((item) => {
+            this.props.moviesData.map((item) => {
                 return(
                     <div key={item.id}>
                         <br></br>
@@ -104,6 +104,7 @@ function MiddlePartDetails(props){
         </div>
 
     )
+    }
 }
 
 export default MiddlePartDetails;
